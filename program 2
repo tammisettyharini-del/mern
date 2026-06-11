@@ -1,0 +1,30 @@
+Data.json 
+[ 
+    {  
+        "Name": "Somu", 
+        "Transaction": { "price": 400 }, 
+        "Payment": { "Total": 600 } 
+    }, 
+    { 
+        "Name": "Ravi", 
+        "Transaction": { "price": 350 }, 
+        "Payment": { "Total": 500 } 
+    }, 
+    { 
+        "Name": "Anita", 
+        "Transaction": { "price": 700 }, 
+        "Payment": { "Total": 300 } 
+    }, 
+    { 
+        "Name": "Rahul", 
+        "Transaction": { "price": 450 }, 
+        "Payment": { "Total": 600 } 
+    }  
+] 
+Queries: 
+• db.transaction.find({ "Name": "Somu" }); 
+• db.transaction.find({ "Payment.Total": 600 }); 
+• db.transaction.find({ "Transaction.price": { $gte: 300, $lte: 500 } }); 
+• db.transaction.aggregate9([ 
+{ $group: { _id: null, totalAmount: { $sum: "$Payment.Total" }} } 
+]);
