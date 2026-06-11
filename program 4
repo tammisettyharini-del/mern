@@ -1,0 +1,54 @@
+import {MongoClient} from "mongodb"; 
+import fs from "fs"; 
+const url="mongodb://localhost:27017"; 
+const insert = JSON.parse(fs.readFileSync("data.json")); 
+const client =new MongoClient(url); 
+const db=client.db("abc"); 
+client.connect(); 
+console.log("Connected successfully"); 
+const collection=db.collection("transactions"); 
+const result=await collection.insertMany(insert); 
+console.log(`Inserted ${result.insertedCount} collection`); 
+client.close();
+
+
+data.json 
+[ 
+{ 
+"usn": "1ABCD123", 
+"name": "John Doe", 
+"sem": 3, 
+"year_of_admission": 2022 
+}, 
+{ 
+"usn": "2EFGH456", 
+"name": "Jane Smith", 
+"sem": 4, 
+"year_of_admission": 2021 
+  }, 
+  { 
+    "usn": "3IJKL789", 
+    "name": "Alice Johnson", 
+    "sem": 2, 
+    "year_of_admission": 2023 
+  } 
+] 
+
+
+b - Partial.js 
+const { MongoClient } = require("mongodb"); 
+const partialName = process.argv[2];  
+const url = "mongodb://localhost:27017"; 
+const dbName = "abc"; 
+async function searchStudents() { 
+  const client = await MongoClient.connect(url); 
+  const students = await client 
+    .db(dbName) 
+    .collection("transactions") 
+    .find({ name: { $regex: partialName, $options: "i" } }) 
+    .toArray(); 
+ 
+  console.log(students); 
+  client.close(); 
+} 
+searchStudents();
