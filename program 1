@@ -27,3 +27,28 @@ const collection = db.collection("transactions");
 const result = await collection.deleteMany({ $or: data });
 console.log(`Deleted ${result.deletedCount} documents`);
 client.close();
+
+
+data.json 
+[ 
+  { 
+    "_id": 1, 
+    "name": "Transaction 1", 
+    "amount": 100 
+  }, 
+  { 
+    "_id": 2, 
+    "name": "Transaction 2", 
+    "amount": 200 
+  }, 
+  { 
+    "_id": 3, 
+    "name": "Transaction 3", 
+    "amount": 300 
+  } 
+] 
+
+
+mongoimport --db usermanaged --collection transactions --file transactions.json --jsonArray
+
+mongoimport --db usermanaged --collection transactions --file transactions_upsert.json --jsonArray --mode upsert --upsertFields transaction_id
